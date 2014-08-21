@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<something-else-entirely>
+	<proxool>
+		<alias>clinicPool</alias>
+		<driver-url>jdbc:oracle:thin:@9.98.12.88:1521:oracledb</driver-url>
+		<driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
+		<driver-properties>
+			<property name="user" value="huzh" />
+			<property name="password" value="12345" />
+			<property name="useUnicode" value="true" />
+			<property name="characterEncoding" value="utf-8" />
+		</driver-properties>
+		<house-keeping-sleep-time>10</house-keeping-sleep-time>
+		<prototype-count>2</prototype-count>
+		<maximum-connection-count>10</maximum-connection-count>
+		<minimum-connection-count>0</minimum-connection-count>
+		<proxool.simultaneous-build-throttle>100</proxool.simultaneous-build-throttle>
+		<house-keeping-test-sql>select CURRENT_DATE</house-keeping-test-sql>
+	</proxool>
+</something-else-entirely>
