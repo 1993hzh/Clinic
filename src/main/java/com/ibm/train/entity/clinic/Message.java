@@ -24,7 +24,7 @@ public class Message extends AbstractEntity {
 
 	public static final String CONSTANT_TYPE_SEND = "send";
 	public static final String CONSTANT_TYPE_RECEIVE = "receive";
-	
+
 	@ManyToOne
 	private User sender;
 	private Date sendTime;
