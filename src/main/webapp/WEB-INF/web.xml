@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app id="Clinic" version="3.0"
-	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<web-app id="Clinic" version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 	<display-name>Clinic</display-name>
 
-	<!-- spring config begin -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:applicationContext.xml</param-value>
 	</context-param>
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
-	<!-- spring config end -->
 
-	<!-- code format filter config begin -->
 	<filter>
 		<filter-name>encoding</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -27,56 +21,47 @@
 			<param-value>true</param-value>
 		</init-param>
 	</filter>
-	<filter-mapping>
-		<filter-name>encoding</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	<!-- code format filter config end -->
-
-	<!-- hibernate config begin -->
 	<filter>
 		<filter-name>hibernateFilter</filter-name>
 		<filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
 	</filter>
-	<filter-mapping>
-		<filter-name>hibernateFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	<!-- hibernate config end -->
-	
-	<!-- login filter begin -->
 	<filter>
 		<filter-name>loginFilter</filter-name>
 		<filter-class>com.ibm.train.web.filters.LoginFilter</filter-class>
 	</filter>
-	<filter-mapping>
-		<filter-name>loginFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	<!-- login filter end -->
-	
-	<!-- page filter begin -->
 	<filter>
 		<filter-name>pageFilter</filter-name>
 		<filter-class>com.ibm.train.web.filters.PageFilter</filter-class>
 	</filter>
-	<filter-mapping>
-		<filter-name>pageFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	<!-- page filter end -->
-
-	<!-- struts config begin -->
 	<filter>
 		<filter-name>struts2</filter-name>
 		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
 	</filter>
+
 	<filter-mapping>
-		<filter-name>struts2</filter-name>
+		<filter-name>encoding</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	<!-- struts config end -->
+	<filter-mapping>
+		<filter-name>loginFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>hibernateFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>pageFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>*.action</url-pattern>
+	</filter-mapping>
 
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 	<welcome-file-list>
 		<welcome-file>login.jsp</welcome-file>
 	</welcome-file-list>
