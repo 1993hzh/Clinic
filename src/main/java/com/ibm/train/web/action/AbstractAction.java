@@ -1,16 +1,11 @@
 package com.ibm.train.web.action;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import org.apache.struts2.interceptor.ServletRequestAware;
-import org.apache.struts2.interceptor.ServletResponseAware;
-import org.apache.struts2.interceptor.SessionAware;
+import org.apache.struts2.ServletActionContext;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ibm.train.entity.clinic.User;
 import com.opensymphony.xwork2.ModelDriven;
 
 /**
@@ -18,14 +13,9 @@ import com.opensymphony.xwork2.ModelDriven;
  * 
  * @param <T>
  */
-public abstract class AbstractAction<T> implements ModelDriven<T>,
-		SessionAware, ServletRequestAware, ServletResponseAware {
+public abstract class AbstractAction<T> implements ModelDriven<T> {
 
 	protected Logger logger = LoggerFactory.getLogger(getClass());
-
-	protected HttpServletResponse response;
-	protected HttpServletRequest request;
-	protected HttpSession session;
 
 	protected String ids;
 	protected String sortname;
@@ -36,66 +26,17 @@ public abstract class AbstractAction<T> implements ModelDriven<T>,
 	protected PageJsonData data = new PageJsonData();
 	protected ObjectMapper mapper = new ObjectMapper();
 
-	public String execute() throws Exception {
+	public String execute() {
 		return list();
 	}
 
-	public String list() throws Exception {
+	public abstract String list();
 
-		return null;
-	}
+	public abstract String create();
 
-	public String create() throws Exception {
+	public abstract String update();
 
-		return null;
-	}
-
-	public String update() throws Exception {
-
-		return null;
-	}
-
-	public String delete() throws Exception {
-
-		return null;
-	}
-
-	@Override
-	public T getModel() {
-		return null;
-	}
-
-	public Logger getLogger() {
-		return logger;
-	}
-
-	public void setLogger(Logger logger) {
-		this.logger = logger;
-	}
-
-	public HttpServletResponse getResponse() {
-		return response;
-	}
-
-	public void setResponse(HttpServletResponse response) {
-		this.response = response;
-	}
-
-	public HttpServletRequest getRequest() {
-		return request;
-	}
-
-	public void setRequest(HttpServletRequest request) {
-		this.request = request;
-	}
-
-	public HttpSession getSession() {
-		return session;
-	}
-
-	public void setSession(HttpSession session) {
-		this.session = session;
-	}
+	public abstract String delete();
 
 	public String getIds() {
 		return ids;
@@ -143,6 +84,17 @@ public abstract class AbstractAction<T> implements ModelDriven<T>,
 
 	public void setData(PageJsonData data) {
 		this.data = data;
+	}
+
+	/**
+	 * get the current user who is online
+	 * @return
+	 */
+	public User getLoginUser() {
+		Object user = ServletActionContext.getRequest().getSession()
+				.getAttribute(User.CONSTANT_LOGIN_USER);
+		return user == null ? null : (User) user;
+
 	}
 
 }
