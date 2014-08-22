@@ -21,12 +21,9 @@ public class UserService extends AbstractService<User> {
 
 	public User login(String account, String pwd) {
 		@SuppressWarnings("unchecked")
-		List<User> user = this.em
-				.createQuery("select u.password from User u where account=?")
-				.setParameter(1, account).getResultList();
-		if (user != null
-				&& Encryption.encoderBySHA1(pwd).equals(
-						user.get(0).getPassword())) {
+		List<User> user = this.em.createQuery("select u.password from User u where account=?").setParameter(1, account)
+				.getResultList();
+		if (user != null && Encryption.encoderBySHA1(pwd).equals(user.get(0).getPassword())) {
 			return user.get(0);
 		} else {
 			return null;

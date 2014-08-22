@@ -25,16 +25,14 @@ public class MessageService extends AbstractService<Message> {
 	public void delete(String messageId, String userId) {
 		for (String id : messageId.split(",")) {
 			this.em.createNativeQuery(
-					"delete from T_Message_Receiver where message_id='" + id
-							+ "' and receiver_id = '" + userId + "'")
+					"delete from T_Message_Receiver where message_id='" + id + "' and receiver_id = '" + userId + "'")
 					.executeUpdate();
 		}
 	}
 
 	public String getMessageIdsForReceiver(String userId) {
 		Object result = this.em.createNativeQuery(
-				"select message_id from T_Message_Receiver where receiver_id = '"
-						+ userId + "'").getResultList();
+				"select message_id from T_Message_Receiver where receiver_id = '" + userId + "'").getResultList();
 		return result.toString().substring(1, result.toString().length() - 1);
 	}
 }
