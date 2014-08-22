@@ -3,6 +3,8 @@
 	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="clinic" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<non-jta-data-source></non-jta-data-source>
 	
 		<class>com.ibm.train.entity.AbstractEntity</class>
 		<class>com.ibm.train.entity.clinic.User</class>
@@ -15,8 +17,6 @@
 		<class>com.ibm.train.entity.clinic.Salesman</class>
 		<class>com.ibm.train.entity.clinic.Supplier</class>
 		
-		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<non-jta-data-source></non-jta-data-source>
 		<exclude-unlisted-classes></exclude-unlisted-classes>
 		<properties>
 			<property name="hibernate.ejb.cfgfile" value="hibernate-clinic.cfg.xml" />
