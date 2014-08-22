@@ -4,24 +4,42 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<!-- Bootstrap core CSS -->
+<link href="plugin/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
-	<div id="header">
-		<div id="navigation">
-			<ul class="nav">
-				<li class="active"><a href="#">Home</a></li>
-				<li><a href="#">Doctor's Info</a></li>
-				<li><a href="#">Medicine's Info</a></li>
-			</ul>
-		</div>
-		<div id="search">
-			<form action="" method="">
-				<input type="text" value="Search" class="txtfield"
-					onblur="javascript:if(this.value==''){this.value=this.defaultValue;}"
-					onfocus="javascript:if(this.value==this.defaultValue){this.value='';}" />
-				<input type="submit" value="" class="button" />
-			</form>
+
+	<!-- Fixed navbar -->
+	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Clinic Automation System</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#Home">Home</a></li>
+					<li><a href="#Doc">Doctor's Info</a></li>
+					<li><a href="#Med">Medicine's Info</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<form class="navbar-form navbar-right">
+							<input type="text" class="form-control" placeholder="Search...">
+						</form>
+					</li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
 		</div>
 	</div>
+
 </body>
 </html>
