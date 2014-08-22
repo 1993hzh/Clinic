@@ -33,8 +33,8 @@ public class LoginFilter implements Filter {
 		if (request.getAttribute(User.CONSTANT_LOGIN_USER) == null) {
 			//OutPutStreamUtil.renderText(CONSTANT_LOGIN_CODE);
 		} else {
-			chain.doFilter(request, response);
 		}
+		chain.doFilter(request, response);
 	}
 
 	@Override
