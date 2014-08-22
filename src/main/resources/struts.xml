@@ -2,8 +2,11 @@
 <!DOCTYPE struts PUBLIC
     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
     "http://struts.apache.org/dtds/struts-2.0.dtd">
-
 <struts>
+	
+	<!-- without it ,struts cannot find method dynamic -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"/>
+
 	<constant name="struts.devMode" value="false"></constant>
 	<constant name="struts.i18n.encoding" value="UTF-8" />
 	<constant name="struts.convention.classes.reload" value="true" />
@@ -12,5 +15,6 @@
 	<constant name="struts.convention.result.path" value="/" />
 	<constant name="struts.convention.package.locators" value="action" />
 	<constant name="struts.convention.package.locators.basePackage" value="com.ibm.train.web.action" />
+	<constant name="struts.convention.exclude.parentClassLoader" value="true" />
 	
 </struts>
