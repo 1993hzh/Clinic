@@ -1,7 +1,7 @@
 package com.ibm.train.entity.clinic;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -22,6 +22,9 @@ public class Message extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 
+	public static final String CONSTANT_TYPE_SEND = "send";
+	public static final String CONSTANT_TYPE_RECEIVE = "receive";
+	
 	@ManyToOne
 	private User sender;
 	private Date sendTime;
@@ -30,7 +33,9 @@ public class Message extends AbstractEntity {
 
 	@ManyToMany
 	@JoinTable(name = "T_Message_Receiver", joinColumns = { @JoinColumn(name = "message_id") }, inverseJoinColumns = { @JoinColumn(name = "receiver_id") })
-	private Set<User> receivers;
+	private List<User> receivers;
+
+	private String receiverNames;
 
 	public User getSender() {
 		return sender;
@@ -64,12 +69,20 @@ public class Message extends AbstractEntity {
 		this.content = content;
 	}
 
-	public Set<User> getReceivers() {
+	public List<User> getReceivers() {
 		return receivers;
 	}
 
-	public void setReceivers(Set<User> receivers) {
+	public void setReceivers(List<User> receivers) {
 		this.receivers = receivers;
+	}
+
+	public String getReceiverNames() {
+		return receiverNames;
+	}
+
+	public void setReceiverNames(String receiverNames) {
+		this.receiverNames = receiverNames;
 	}
 
 }

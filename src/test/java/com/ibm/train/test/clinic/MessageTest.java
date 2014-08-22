@@ -1,8 +1,6 @@
 package com.ibm.train.test.clinic;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,19 +20,20 @@ public class MessageTest extends LoadConfigure {
 
 	@Test
 	public void create() {
-		Message message = new Message();
-		message.setContent("test");
-		Set<User> user = new HashSet<User>();
-		user.addAll(userService.query("from User"));
-		message.setReceivers(user);
-		message.setSender(userService
-				.querySingle("from User where name='test1'"));
-		message.setSendTime(new Date());
-		message.setTheme("test");
-		try {
-			messageService.create(message);
-		} catch (Exception e) {
-			e.printStackTrace();
+		for (int i = 0; i < 5; i++) {
+			Message message = new Message();
+			message.setContent("test");
+			message.setReceivers(userService
+					.query("from User where name='test2'"));
+			message.setSender(userService
+					.querySingle("from User where name='test1'"));
+			message.setSendTime(new Date());
+			message.setTheme("test");
+			try {
+				messageService.create(message);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -43,13 +42,17 @@ public class MessageTest extends LoadConfigure {
 
 	}
 
-	@Test
+	// @Test
 	public void delete() {
-
+		Message m = messageService
+				.querySingle("from Message where sender.name='test1'");
+		User u = userService.querySingle("from User where name='test1'");
+		messageService.delete(m.getId(), u.getId());
 	}
 
 	@Test
 	public void list() {
-
+		User u = userService.querySingle("from User where name='test2'");
+		System.out.println(messageService.getMessageIdsForReceiver(u.getId()));
 	}
 }

@@ -1,7 +1,6 @@
 package com.ibm.train.entity.clinic;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,7 +52,7 @@ public class User extends AbstractEntity {
 	private List<Message> messageSend;
 
 	@ManyToMany(mappedBy = "receivers", fetch = FetchType.EAGER)
-	private Set<Message> messageReceive;
+	private List<Message> messageReceive;
 
 	public String getName() {
 		return name;
@@ -127,11 +126,11 @@ public class User extends AbstractEntity {
 		this.messageSend = messageSend;
 	}
 
-	public Set<Message> getMessageReceive() {
+	public List<Message> getMessageReceive() {
 		return messageReceive;
 	}
 
-	public void setMessageReceive(Set<Message> messageReceive) {
+	public void setMessageReceive(List<Message> messageReceive) {
 		this.messageReceive = messageReceive;
 	}
 
