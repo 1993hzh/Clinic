@@ -33,6 +33,8 @@ public class User extends AbstractEntity {
 	public static final String CONSTANT_ROLE_PATIENT = "patient";
 	public static final String CONSTANT_ROLE_SALESMAN = "salesman";
 	public static final String CONSTANT_ROLE_SUPPLIER = "supplier";
+	
+	public static final String CONSTANT_LOGIN_USER = "loginUser";
 
 	@Column(nullable = false, unique = true)
 	private String account;
