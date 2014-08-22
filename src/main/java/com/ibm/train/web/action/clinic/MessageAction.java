@@ -22,6 +22,7 @@ import com.opensymphony.xwork2.inject.Inject;
 @Controller
 public class MessageAction extends AbstractAction<Message> {
 
+	
 	@Inject
 	private MessageService messageService;
 	@Inject
@@ -49,14 +50,10 @@ public class MessageAction extends AbstractAction<Message> {
 	public String list() {
 		// see the sent message
 		if (Message.CONSTANT_TYPE_SEND.equals(lookType)) {
-			data = messageService
-					.getPageData("from Message where sender.id = '"
-							+ getLoginUser().getId() + "'");
+			data = messageService.getPageData("from Message where sender.id = '" + getLoginUser().getId() + "'");
 			// see the inbox message
 		} else if (Message.CONSTANT_TYPE_RECEIVE.equals(lookType)) {
-			data = messageService
-					.getPageData("from Message where id in ('"
-							+ getLoginUser().getId() + "')");
+			data = messageService.getPageData("from Message where id in ('" + getLoginUser().getId() + "')");
 		}
 		return null;
 	}
@@ -64,8 +61,7 @@ public class MessageAction extends AbstractAction<Message> {
 	@Override
 	public String create() {
 		try {
-			List<User> receivers = userService.query("from User where id in ('"
-					+ accounts + "')");
+			List<User> receivers = userService.query("from User where id in ('" + accounts + "')");
 			if (receivers == null) {
 				OutPutStreamUtil.renderText("receiver not found!");
 			} else {
@@ -77,11 +73,9 @@ public class MessageAction extends AbstractAction<Message> {
 				 */
 				StringBuffer receiverNames = new StringBuffer();
 				for (User u : receivers) {
-					receiverNames.append(u.getName()).append(
-							"<" + u.getAccount() + ">, ");
+					receiverNames.append(u.getName()).append("<" + u.getAccount() + ">, ");
 				}
-				message.setReceiverNames(receiverNames.deleteCharAt(
-						receiverNames.lastIndexOf(", ")).toString());
+				message.setReceiverNames(receiverNames.deleteCharAt(receiverNames.lastIndexOf(", ")).toString());
 
 				message.setReceivers(receivers);
 				message.setSender(getLoginUser());
