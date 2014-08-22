@@ -30,9 +30,10 @@ public class PageFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
+		getOffset((HttpServletRequest) request);
+		getPageSize((HttpServletRequest) request);
 		try {
-			getOffset((HttpServletRequest) request);
-			getPageSize((HttpServletRequest) request);
+			chain.doFilter(request, response);
 		} finally {
 			PageContext.removeOffset();
 			PageContext.removePageSize();
