@@ -1,6 +1,8 @@
 package com.ibm.train.web.action;
 
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.convention.annotation.ParentPackage;
+import org.apache.struts2.convention.annotation.Result;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +15,10 @@ import com.opensymphony.xwork2.ModelDriven;
  * 
  * @param <T>
  */
+@ParentPackage("json-default")
+@Result(name = "list", type = "json", params = { "root", "data" })
 public abstract class AbstractAction<T> implements ModelDriven<T> {
+
 
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -30,7 +35,9 @@ public abstract class AbstractAction<T> implements ModelDriven<T> {
 		return list();
 	}
 
-	public abstract String list();
+	public String list() {
+		return "list";
+	}
 
 	public abstract String create();
 
@@ -91,8 +98,7 @@ public abstract class AbstractAction<T> implements ModelDriven<T> {
 	 * @return
 	 */
 	public User getLoginUser() {
-		Object user = ServletActionContext.getRequest().getSession()
-				.getAttribute(User.CONSTANT_LOGIN_USER);
+		Object user = ServletActionContext.getRequest().getSession().getAttribute(User.CONSTANT_LOGIN_USER);
 		return user == null ? null : (User) user;
 
 	}
