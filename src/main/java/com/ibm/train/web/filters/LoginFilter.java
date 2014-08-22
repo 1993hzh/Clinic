@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ibm.train.entity.clinic.User;
+import com.ibm.train.util.OutPutStreamUtil;
 
 /**
  * @author HuZhonghua
@@ -19,8 +20,7 @@ import com.ibm.train.entity.clinic.User;
  */
 public class LoginFilter implements Filter {
 
-	public static final String CONSTANT_LOGIN = "login";
-	public static final String CONSTANT_LOGIN_PATH = "login.jsp";
+	protected static final String CONSTANT_LOGIN_CODE = "login";
 
 	@Override
 	public void destroy() {
@@ -30,10 +30,8 @@ public class LoginFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
-		if (request.getAttribute(User.CONSTANT_LOGIN_USER) == null
-				&& !((HttpServletRequest) request).getRequestURI().contains(
-						CONSTANT_LOGIN)) {
-			((HttpServletResponse) response).sendRedirect(CONSTANT_LOGIN_PATH);
+		if (request.getAttribute(User.CONSTANT_LOGIN_USER) == null) {
+			//OutPutStreamUtil.renderText(CONSTANT_LOGIN_CODE);
 		} else {
 			chain.doFilter(request, response);
 		}
