@@ -21,6 +21,8 @@ import com.ibm.train.web.action.AbstractAction;
 		@Result(name = "fail", location = "/index.jsp") })
 public class UserAction extends AbstractAction<User> {
 
+	private static final long serialVersionUID = 1L;
+
 	@Autowired
 	private UserService userService;
 

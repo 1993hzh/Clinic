@@ -1,7 +1,36 @@
 @CHARSET "UTF-8";
 
-lable #loginMsg {
-	font-color: red;
+#loginMsg {
+	color: red;
 	text-align: center;
 	margin-top: 10px;
+	width: 100%;
+}
+
+.container .head {
+	clear: both;
+}
+
+.container .content {
+	clear: both;
+}
+
+.container .foot {
+	clear: both;
+}
+
+.theme_content {
+	width:65%;
+	overflow:hidden;
+}
+
+.message_user {
+	width:20%;
+}
+
+.message_sendtime {
+	width:15%;
+}
+
+.message_checkbox {
 }

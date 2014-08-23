@@ -3,6 +3,9 @@ package com.ibm.train.web.action.clinic;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.Results;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -12,7 +15,6 @@ import com.ibm.train.service.clinic.MessageService;
 import com.ibm.train.service.clinic.UserService;
 import com.ibm.train.util.OutPutStreamUtil;
 import com.ibm.train.web.action.AbstractAction;
-import com.opensymphony.xwork2.inject.Inject;
 
 /**
  * @author HuZhonghua
@@ -20,18 +22,31 @@ import com.opensymphony.xwork2.inject.Inject;
  */
 @Scope("prototype")
 @Controller
+@Results(value = { @Result(name = "inbox", location = "/message/inbox.jsp"),
+		@Result(name = "sent", location = "/message/sent.jsp") })
 public class MessageAction extends AbstractAction<Message> {
-
+	private static final long serialVersionUID = 1L;
 	
-	@Inject
+	@Autowired
 	private MessageService messageService;
-	@Inject
+	@Autowired
 	private UserService userService;
 
 	private Message message = new Message();
 
 	private String lookType;
 	private String accounts;
+
+	public String listInbox() {
+		data = messageService.getPageData("from Message where id in ("
+				+ messageService.getMessageIdsForReceiver(getLoginUser().getId()) + ")");
+		return "inbox";
+	}
+
+	public String listSent() {
+		data = messageService.getPageData("from Message where sender.id = '" + getLoginUser().getId() + "'");
+		return "sent";
+	}
 
 	@Override
 	public Message getModel() {

@@ -28,10 +28,10 @@ public class PageFilter implements Filter {
 	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response,
-			FilterChain chain) throws IOException, ServletException {
-		getOffset((HttpServletRequest) request);
-		getPageSize((HttpServletRequest) request);
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
+			ServletException {
+		PageContext.setOffset(getOffset((HttpServletRequest) request));
+		PageContext.setPageSize(getPageSize((HttpServletRequest) request));
 		try {
 			chain.doFilter(request, response);
 		} finally {
@@ -45,8 +45,7 @@ public class PageFilter implements Filter {
 		if (!isEmpty(offSetStr)) {
 
 		}
-		return isEmpty(offSetStr) ? 0 : (Integer.parseInt(offSetStr) - 1)
-				* PageContext.getPageSize();
+		return isEmpty(offSetStr) ? 0 : (Integer.parseInt(offSetStr) - 1) * PageContext.getPageSize();
 	}
 
 	private int getPageSize(HttpServletRequest request) {
@@ -54,17 +53,14 @@ public class PageFilter implements Filter {
 		if (!isEmpty(rp)) {
 			try {
 				Integer irp = Integer.parseInt(rp);
-				request.getSession().setAttribute(CONSTANT_PAGE_SIZE_NAME,
-						irp == 0 ? CONSTANT_DEFAULT_PAGESIZE : irp);
+				request.getSession().setAttribute(CONSTANT_PAGE_SIZE_NAME, irp == 0 ? CONSTANT_DEFAULT_PAGESIZE : irp);
 			} catch (Exception ignore) {
 			}
 		}
 
-		Object pageSize = request.getSession().getAttribute(
-				CONSTANT_PAGE_SIZE_NAME);
+		Object pageSize = request.getSession().getAttribute(CONSTANT_PAGE_SIZE_NAME);
 		if (pageSize == null) {
-			request.getSession().setAttribute(CONSTANT_PAGE_SIZE_NAME,
-					CONSTANT_DEFAULT_PAGESIZE);
+			request.getSession().setAttribute(CONSTANT_PAGE_SIZE_NAME, CONSTANT_DEFAULT_PAGESIZE);
 			return CONSTANT_DEFAULT_PAGESIZE;
 		}
 		return (Integer) pageSize;

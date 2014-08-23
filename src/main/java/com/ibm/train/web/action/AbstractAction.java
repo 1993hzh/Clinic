@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ibm.train.entity.clinic.User;
+import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
 /**
@@ -20,8 +21,9 @@ import com.opensymphony.xwork2.ModelDriven;
  */
 @ParentPackage("json-default")
 @Result(name = "list", type = "json", params = { "root", "data" })
-public abstract class AbstractAction<T> implements ModelDriven<T> {
+public abstract class AbstractAction<T> extends ActionSupport implements ModelDriven<T> {
 
+	private static final long serialVersionUID = 1L;
 
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 

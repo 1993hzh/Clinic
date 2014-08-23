@@ -5,8 +5,12 @@
 	if (loginMsg == null) {
 		loginMsg = "";
 	}
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
 %>
-<%@ include file="common/include.jsp"%>
+<base href="<%=basePath%>" />
+<%@ include file="/common/include.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +23,7 @@
 
 <body screen_capture_injected="true" ryt14004="1">
 	<div class="container">
-		<%@ include file="common/head.jsp"%>
+		<%@ include file="/common/head.jsp"%>
 		<c:if test="${loginUser == null }">
 			<div id="login">
 				<!-- Jumbotron -->
@@ -37,10 +41,10 @@
 			</div>
 		</c:if>
 		<c:if test="${loginUser != null }">
-			Welcome, ${loginUser.name}, time: <fmt:formatDate
-				value="<%=new Date()%>" pattern="yyyy-MM-dd HH:mm" />
+			Welcome, ${loginUser.name}, time: 
+			<fmt:formatDate value="<%=new Date()%>" pattern="yyyy-MM-dd HH:mm" />
 		</c:if>
-		<%@ include file="common/foot.jsp"%>
+		<%@ include file="/common/foot.jsp"%>
 	</div>
 </body>
 </html>

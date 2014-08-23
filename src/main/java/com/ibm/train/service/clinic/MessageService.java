@@ -1,5 +1,7 @@
 package com.ibm.train.service.clinic;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.ibm.train.entity.clinic.Message;
@@ -30,9 +32,14 @@ public class MessageService extends AbstractService<Message> {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public String getMessageIdsForReceiver(String userId) {
-		Object result = this.em.createNativeQuery(
+		StringBuffer sb = new StringBuffer();
+		List<String> result = this.em.createNativeQuery(
 				"select message_id from T_Message_Receiver where receiver_id = '" + userId + "'").getResultList();
-		return result.toString().substring(1, result.toString().length() - 1);
+		for (String s : result) {
+			sb.append("'" + s + "',");
+		}
+		return result.size() > 0 ? sb.deleteCharAt(sb.lastIndexOf(",")).toString() : "''";
 	}
 }

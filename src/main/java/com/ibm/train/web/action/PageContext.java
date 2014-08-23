@@ -25,7 +25,7 @@ public class PageContext {
 
 	public static int getPageSize() {
 		Integer ps = pageSize.get();
-		return ps == null ? Integer.MAX_VALUE : ps;
+		return ps == null ? 10 : ps;
 	}
 
 	public static void setPageSize(int _pageSize) {

@@ -76,7 +76,7 @@ public abstract class AbstractService<T> {
 			throws StringIndexOutOfBoundsException {
 		StringBuffer sb = new StringBuffer(sql);
 		sb.delete(0, sb.indexOf("from"));
-		sb.insert(0, "select count(*) from ");
+		sb.insert(0, "select count(*)  ");
 		Query query = em.createQuery(sb.toString());
 		if (params != null && params.length > 0) {
 			for (int i = 1; i <= params.length; i++) {
