@@ -28,7 +28,7 @@
 				<thead>
 					<tr>
 						<th><input type="checkbox" class="checkbox"/></th>
-						<th>Sender</th>
+						<th>Receiver</th>
 						<th>Theme</th>
 						<th>Time</th>
 					</tr>
@@ -37,7 +37,7 @@
 					<c:forEach var="rows" items="${data.data}">
 						<tr>
 							<td class="message_checkbox"><input type="checkbox" class="checkbox"/></td>
-							<td class="message_user">${rows.sender.name}</td>
+							<td class="message_user">${rows.receiverNames}</td>
 							<td class="theme_content">${rows.theme}&nbsp;-&nbsp;${rows.content}</td>
 							<td class="message_sendtime"><fmt:formatDate value="${rows.sendTime}" pattern="yyyy-MM-dd HH:mm" /></td>
 						</tr>
