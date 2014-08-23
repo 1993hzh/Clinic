@@ -39,9 +39,7 @@ public abstract class AbstractAction<T> extends ActionSupport implements ModelDr
 		return list();
 	}
 
-	public String list() {
-		return "list";
-	}
+	public abstract String list();
 
 	public abstract String create();
 
@@ -105,11 +103,11 @@ public abstract class AbstractAction<T> extends ActionSupport implements ModelDr
 		Object user = ServletActionContext.getRequest().getSession().getAttribute(User.CONSTANT_LOGIN_USER);
 		return user == null ? null : (User) user;
 	}
-	
-	protected HttpSession getSession () {
+
+	protected HttpSession getSession() {
 		return ServletActionContext.getRequest().getSession();
 	}
-	
+
 	protected HttpServletRequest getRequest() {
 		return ServletActionContext.getRequest();
 	}
@@ -117,5 +115,5 @@ public abstract class AbstractAction<T> extends ActionSupport implements ModelDr
 	protected HttpServletResponse getResponse() {
 		return ServletActionContext.getResponse();
 	}
-	
+
 }

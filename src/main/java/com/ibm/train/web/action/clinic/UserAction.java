@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 
 import com.ibm.train.entity.clinic.User;
 import com.ibm.train.exception.LoginException;
+import com.ibm.train.service.clinic.DoctorService;
 import com.ibm.train.service.clinic.UserService;
 import com.ibm.train.web.action.AbstractAction;
 
@@ -18,13 +19,15 @@ import com.ibm.train.web.action.AbstractAction;
 @Controller
 @Scope("prototype")
 @Results(value = { @Result(name = "index", type = "redirect", location = "/index.jsp"),
-		@Result(name = "fail", location = "/index.jsp") })
+		@Result(name = "fail", location = "/index.jsp"), @Result(name = "doctor", location = "/doctor.jsp") })
 public class UserAction extends AbstractAction<User> {
 
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private DoctorService doctorService;
 
 	private User user = new User();
 
@@ -67,8 +70,8 @@ public class UserAction extends AbstractAction<User> {
 
 	@Override
 	public String list() {
-		// TODO Auto-generated method stub
-		return null;
+		data = doctorService.getPageData("from Doctor");
+		return "doctor";
 	}
 
 	@Override
