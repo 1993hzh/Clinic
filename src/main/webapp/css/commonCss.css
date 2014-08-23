@@ -34,3 +34,8 @@
 
 .message_checkbox {
 }
+
+.btn_delete {
+	float:left;
+	margin-top:60px;
+}

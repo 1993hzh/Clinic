@@ -54,12 +54,10 @@ public abstract class AbstractService<T> {
 	}
 
 	public PageJsonData getPageData(String sql) {
-		return getPageData(sql, null, PageContext.getOffset(),
-				PageContext.getPageSize());
+		return getPageData(sql, null, PageContext.getOffset(), PageContext.getPageSize());
 	}
 
-	public PageJsonData getPageData(String sql, Object[] params, int offset,
-			int pageSize) {
+	public PageJsonData getPageData(String sql, Object[] params, int offset, int pageSize) {
 		Query query = em.createQuery(sql);
 		if (params != null && params.length > 0) {
 			for (int i = 1; i <= params.length; i++) {
@@ -68,12 +66,10 @@ public abstract class AbstractService<T> {
 		}
 		query.setFirstResult(offset);
 		query.setMaxResults(pageSize);
-		return new PageJsonData(offset / pageSize + 1, query.getResultList(),
-				getCount(sql, params), pageSize);
+		return new PageJsonData(offset / pageSize + 1, query.getResultList(), getCount(sql, params), pageSize);
 	}
 
-	private Integer getCount(String sql, Object[] params)
-			throws StringIndexOutOfBoundsException {
+	private Integer getCount(String sql, Object[] params) throws StringIndexOutOfBoundsException {
 		StringBuffer sb = new StringBuffer(sql);
 		sb.delete(0, sb.indexOf("from"));
 		sb.insert(0, "select count(*)  ");

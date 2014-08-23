@@ -15,25 +15,26 @@
 	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target=".navbar-collapse">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="javascript:void(0)">Clinic
-					Automation System</a>
+				<a class="navbar-brand" href="javascript:void(0)">Clinic Automation System</a>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="index.jsp">Home</a></li>
-					<li><a href="#Doc">Doctor's Info</a></li>
-					<li><a href="#Med">Medicine's Info</a></li>
+					<li><a href="clinic/user!list.action">Doctor's Info</a></li>
+					<li><a href="clinic/medicine!list.action">Medicine's Info</a></li>
 					<%-- loginUser can see, all roles --%>
 					<c:if test="${sessionScope.loginUser != null}">
 						<li class="dropdown">
 							<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Message<span class="caret"></span></a>
 							<ul class="dropdown-menu">
+								<li><a href="message/new.jsp">New</a></li>
+								<li class="divider"></li>
 								<li><a href="clinic/message!listInbox.action">Inbox</a></li>
 								<li class="divider"></li>
 								<li><a href="clinic/message!listSent.action">Sent</a></li>

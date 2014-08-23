@@ -24,9 +24,13 @@ public class Message extends AbstractEntity {
 
 	public static final String CONSTANT_TYPE_SEND = "send";
 	public static final String CONSTANT_TYPE_RECEIVE = "receive";
+	
+	public static final byte CONSTANT_DELETE = 0;
+	public static final byte CONSTANT_NORMAL = 1;
 
 	@ManyToOne
 	private User sender;
+	private byte sendStatus;
 	private Date sendTime;
 	private String theme;
 	private String content;
@@ -83,6 +87,14 @@ public class Message extends AbstractEntity {
 
 	public void setReceiverNames(String receiverNames) {
 		this.receiverNames = receiverNames;
+	}
+
+	public byte getSendStatus() {
+		return sendStatus;
+	}
+
+	public void setSendStatus(byte sendStatus) {
+		this.sendStatus = sendStatus;
 	}
 
 }

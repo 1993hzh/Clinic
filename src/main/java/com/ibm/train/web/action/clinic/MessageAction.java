@@ -1,5 +1,6 @@
 package com.ibm.train.web.action.clinic;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +27,7 @@ import com.ibm.train.web.action.AbstractAction;
 		@Result(name = "sent", location = "/message/sent.jsp") })
 public class MessageAction extends AbstractAction<Message> {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Autowired
 	private MessageService messageService;
 	@Autowired
@@ -34,17 +35,20 @@ public class MessageAction extends AbstractAction<Message> {
 
 	private Message message = new Message();
 
+	private List<User> receiver = new ArrayList<User>();
+
 	private String lookType;
 	private String accounts;
 
 	public String listInbox() {
 		data = messageService.getPageData("from Message where id in ("
-				+ messageService.getMessageIdsForReceiver(getLoginUser().getId()) + ")");
+				+ messageService.getMessageIdsForReceiver(getLoginUser().getId()) + ") order by sendTime desc");
 		return "inbox";
 	}
 
 	public String listSent() {
-		data = messageService.getPageData("from Message where sender.id = '" + getLoginUser().getId() + "'");
+		data = messageService.getPageData("from Message where sendStatus = '" + Message.CONSTANT_NORMAL
+				+ "' and sender.id = '" + getLoginUser().getId() + "' order by sendTime desc");
 		return "sent";
 	}
 
@@ -76,32 +80,53 @@ public class MessageAction extends AbstractAction<Message> {
 	@Override
 	public String create() {
 		try {
-			List<User> receivers = userService.query("from User where id in ('" + accounts + "')");
-			if (receivers == null) {
-				OutPutStreamUtil.renderText("receiver not found!");
-			} else {
-				/*
-				 * save the receivers name: when one or more of the receivers
-				 * delete the message, the t_message_receiver table will delete
-				 * the row, so the receiverNames can save the original receivers
-				 * for others to look up
-				 */
+			/*
+			 * save the receivers name: when one or more of the receivers
+			 * delete the message, the t_message_receiver table will delete
+			 * the row, so the receiverNames can save the original receivers
+			 * for others to look up
+			 */
+			String notfound = getReceiver();
+			if (receiver != null && receiver.size() > 0) {
 				StringBuffer receiverNames = new StringBuffer();
-				for (User u : receivers) {
+				for (User u : receiver) {
 					receiverNames.append(u.getName()).append("<" + u.getAccount() + ">, ");
 				}
 				message.setReceiverNames(receiverNames.deleteCharAt(receiverNames.lastIndexOf(", ")).toString());
 
-				message.setReceivers(receivers);
+				message.setReceivers(receiver);
 				message.setSender(getLoginUser());
 				message.setSendTime(new Date());
 				messageService.create(message);
-				OutPutStreamUtil.renderText("true");
 			}
+			OutPutStreamUtil.renderText(!isEmpty(notfound) ? "Accounts: " + notfound + " not found!" : "true");
 		} catch (Exception e) {
+			e.printStackTrace();
 			OutPutStreamUtil.renderText(e.getMessage());
 		}
 		return null;
+	}
+
+	private boolean isEmpty(String str) {
+		return null == str || str.trim().length() == 0;
+	}
+
+	private String getReceiver() {
+		StringBuffer sb = new StringBuffer();
+		receiver.clear();//for cache
+		//query receiver one by one so that we can find they are existed or not
+		for (String s : accounts.split(",")) {
+			User user = userService.querySingle("from User where account = '" + s + "'");
+			if (user == null) {
+				sb.append(s + ",");
+			} else {
+				//id constraint violate
+				if (!receiver.contains(user)) {
+					receiver.add(user);
+				}
+			}
+		}
+		return sb.toString();
 	}
 
 	@Override
@@ -112,7 +137,20 @@ public class MessageAction extends AbstractAction<Message> {
 	@Override
 	public String delete() {
 		try {
-			messageService.delete(ids, getLoginUser().getId());
+			//receiver delete
+			//delete the row in the table T_MESSAGE_RECEIVER
+			if (lookType.equals(Message.CONSTANT_TYPE_RECEIVE)) {
+				messageService.delete(ids, getLoginUser().getId());
+				//sender delete
+				//update the sendstatus
+				//otherwise the receivers of the message will not see the message
+			} else if (lookType.equals(Message.CONSTANT_TYPE_SEND)) {
+				for (String id : ids.split(",")) {
+					message = messageService.findById(id);
+					message.setSendStatus(Message.CONSTANT_DELETE);
+					messageService.update(message);
+				}
+			}
 			OutPutStreamUtil.renderText("true");
 		} catch (Exception e) {
 			OutPutStreamUtil.renderText(e.getMessage());
