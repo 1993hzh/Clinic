@@ -9,6 +9,10 @@ import com.ibm.train.exception.LoginException;
 import com.ibm.train.service.AbstractService;
 import com.ibm.train.util.Encryption;
 
+/**
+ * @author HuZhonghua
+ *
+ */
 @Service
 public class UserService extends AbstractService<User> {
 

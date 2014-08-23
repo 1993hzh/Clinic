@@ -5,6 +5,10 @@ import org.springframework.stereotype.Service;
 import com.ibm.train.entity.clinic.Order;
 import com.ibm.train.service.AbstractService;
 
+/**
+ * @author HuZhonghua
+ *
+ */
 @Service
 public class OrderService extends AbstractService<Order> {
 

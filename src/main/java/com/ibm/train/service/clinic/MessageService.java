@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service;
 import com.ibm.train.entity.clinic.Message;
 import com.ibm.train.service.AbstractService;
 
+/**
+ * @author HuZhonghua
+ *
+ */
 @Service
 public class MessageService extends AbstractService<Message> {
 

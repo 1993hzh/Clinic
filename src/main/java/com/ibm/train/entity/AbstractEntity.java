@@ -9,6 +9,10 @@ import javax.persistence.MappedSuperclass;
 
 import org.hibernate.annotations.GenericGenerator;
 
+/**
+ * @author HuZhonghua
+ *
+ */
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 349789642083380004L;

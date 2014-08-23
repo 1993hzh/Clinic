@@ -6,29 +6,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.ibm.train.entity.clinic.Medicine;
+import com.ibm.train.entity.clinic.Order;
 import com.ibm.train.service.clinic.MedicineService;
+import com.ibm.train.service.clinic.OrderService;
 import com.ibm.train.web.action.AbstractAction;
 
 /**
  * @author HuZhonghua
  *
  */
-@Scope("prototype")
 @Controller
-@Results(value = { @Result(name = "medicine", location = "/medicine.jsp") })
-public class MedicineAction extends AbstractAction<Medicine> {
+@Scope("prototype")
+@Results(value = { @Result(name = "fail", location = "/index.jsp"), @Result(name = "doctor", location = "/doctor.jsp") })
+public class OrderAction extends AbstractAction<Order> {
 
 	private static final long serialVersionUID = 1L;
 
+	private Order order = new Order();
+	
+	@Autowired
+	private OrderService orderService;
 	@Autowired
 	private MedicineService medicineService;
-
-	private Medicine medicine = new Medicine();
+	
+	@Override
+	public Order getModel() {
+		return order;
+	}
 
 	@Override
-	public Medicine getModel() {
-		return medicine;
+	public String list() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -47,20 +56,6 @@ public class MedicineAction extends AbstractAction<Medicine> {
 	public String delete() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	public Medicine getMedicine() {
-		return medicine;
-	}
-
-	public void setMedicine(Medicine medicine) {
-		this.medicine = medicine;
-	}
-
-	@Override
-	public String list() {
-		data = medicineService.getPageData("from Medicine");
-		return "medicine";
 	}
 
 }

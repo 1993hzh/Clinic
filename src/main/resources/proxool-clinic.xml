@@ -10,7 +10,7 @@
 			<property name="useUnicode" value="true" />
 			<property name="characterEncoding" value="utf-8" />
 		</driver-properties>
-		<house-keeping-sleep-time>10</house-keeping-sleep-time>
+		<house-keeping-sleep-time>1000</house-keeping-sleep-time>
 		<prototype-count>2</prototype-count>
 		<maximum-connection-count>10</maximum-connection-count>
 		<minimum-connection-count>0</minimum-connection-count>
