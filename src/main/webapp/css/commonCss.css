@@ -1,0 +1,7 @@
+@CHARSET "UTF-8";
+
+lable #loginMsg {
+	font-color: red;
+	text-align: center;
+	margin-top: 10px;
+}
