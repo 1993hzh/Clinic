@@ -43,15 +43,28 @@
 					</c:if>
 					<%-- doctor,salesman,supplier can see --%>
 					<c:if test="${sessionScope.loginUser.role eq 'doctor' || sessionScope.loginUser.role eq 'salesman' || sessionScope.loginUser.role eq 'supplier'}">
-						<li><a href="#Med">Order</a></li>
+						<li class="dropdown">
+							<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Order<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="order/new.jsp">New</a></li>
+								<c:if test="${sessionScope.loginUser.role eq 'supplier'|| sessionScope.loginUser.role eq 'salesman'}">
+									<li class="divider"></li>
+									<li><a href="clinic/order!listReceive.action">Receive</a></li>
+								</c:if>
+								<c:if test="${sessionScope.loginUser.role eq 'doctor'|| sessionScope.loginUser.role eq 'salesman'}">
+									<li class="divider"></li>
+									<li><a href="clinic/order!listSend.action">Send</a></li>
+								</c:if>
+							</ul>
+						</li>
 					</c:if>
 					<%-- salesman can see --%>
 					<c:if test="${sessionScope.loginUser.role eq 'salesman'}">
-						<li><a href="#Med">Check Stock</a></li>
+						<li><a href="#">Check Stock</a></li>
 					</c:if>
 					<%-- doctor can see --%>
 					<c:if test="${sessionScope.loginUser.role eq 'doctor'}">
-						<li><a href="#Med">View Record</a></li>
+						<li><a href="#">View Record</a></li>
 					</c:if>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">

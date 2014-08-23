@@ -7,8 +7,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.ibm.train.entity.clinic.Order;
+import com.ibm.train.service.clinic.MedicineInOrderService;
 import com.ibm.train.service.clinic.MedicineService;
 import com.ibm.train.service.clinic.OrderService;
+import com.ibm.train.util.OutPutStreamUtil;
 import com.ibm.train.web.action.AbstractAction;
 
 /**
@@ -17,18 +19,33 @@ import com.ibm.train.web.action.AbstractAction;
  */
 @Controller
 @Scope("prototype")
-@Results(value = { @Result(name = "fail", location = "/index.jsp"), @Result(name = "doctor", location = "/doctor.jsp") })
+@Results(value = { @Result(name = "send", location = "/order/send.jsp"),
+		@Result(name = "receive", location = "/order/receive.jsp") })
 public class OrderAction extends AbstractAction<Order> {
 
 	private static final long serialVersionUID = 1L;
 
 	private Order order = new Order();
-	
+
 	@Autowired
 	private OrderService orderService;
 	@Autowired
 	private MedicineService medicineService;
-	
+	@Autowired
+	private MedicineInOrderService medicineInOrderService;
+
+	public String listSend() {
+		data = orderService.getPageData("from Order where creator.id='" + getLoginUser().getId()
+				+ "' order by createTime desc");
+		return "send";
+	}
+
+	public String listReceive() {
+		data = orderService.getPageData("from Order where receiver.id='" + getLoginUser().getId()
+				+ "' order by createTime desc");
+		return "receive";
+	}
+
 	@Override
 	public Order getModel() {
 		return order;
@@ -36,19 +53,24 @@ public class OrderAction extends AbstractAction<Order> {
 
 	@Override
 	public String list() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String create() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public String update() {
-		// TODO Auto-generated method stub
+		try {
+			orderService.update(order);
+			OutPutStreamUtil.renderText("true");
+		} catch (Exception e) {
+			OutPutStreamUtil.renderText(e.getMessage());
+			e.printStackTrace();
+		}
 		return null;
 	}
 

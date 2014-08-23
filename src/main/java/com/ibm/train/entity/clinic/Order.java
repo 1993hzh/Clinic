@@ -20,6 +20,12 @@ public class Order extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 
+	public static final byte CONSTANT_ORDER_NEW = 0;
+	public static final byte CONSTANT_ORDER_CONFIRM = 1;
+	public static final byte CONSTANT_ORDER_AVAILABLE = 2;
+	public static final byte CONSTANT_ORDER_NOT_AVAILABLE = 3;
+	public static final byte CONSTANT_ORDER_FINISH = 4;
+
 	@ManyToOne
 	private User creator;// doctor or salesman
 	private Date createTime;
@@ -34,7 +40,7 @@ public class Order extends AbstractEntity {
 	@OneToMany(mappedBy = "order")
 	private List<MedicineInOrder> medicineList;
 
-	private Integer status;
+	private byte status;
 	private Double cost;
 
 	public User getCreator() {
@@ -69,11 +75,11 @@ public class Order extends AbstractEntity {
 		this.medicineList = medicineList;
 	}
 
-	public Integer getStatus() {
+	public byte getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(byte status) {
 		this.status = status;
 	}
 
@@ -91,6 +97,31 @@ public class Order extends AbstractEntity {
 
 	public void setPatient(User patient) {
 		this.patient = patient;
+	}
+
+	public String getStatusDTO() {
+		String result = "";
+		switch (status) {
+		case CONSTANT_ORDER_NEW:
+			result = "New";
+			break;
+		case CONSTANT_ORDER_CONFIRM:
+			result = "Confirmed";
+			break;
+		case CONSTANT_ORDER_AVAILABLE:
+			result = "Available";
+			break;
+		case CONSTANT_ORDER_NOT_AVAILABLE:
+			result = "Stock not enough";
+			break;
+		case CONSTANT_ORDER_FINISH:
+			result = "Finished";
+			break;
+		default:
+			result = "Undefined status";
+			break;
+		}
+		return result;
 	}
 
 }
