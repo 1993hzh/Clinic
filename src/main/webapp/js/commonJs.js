@@ -13,16 +13,17 @@ function isEmpty(str) {
 	}
 }
 
-function delete_message(id) {
+function delete_message(id, type, src) {
 	$.ajax({
 		url : 'clinic/message!delete.action',
 		type : 'post',
 		data : {
-			ids : id
+			ids : id,
+			lookType : type
 		},
 		success : function(msg) {
 			if (msg == "true") {
-				$(this).parent().parent.remove();
+				$(src).parent().parent().remove();
 			} else {
 				alert(msg);
 			}

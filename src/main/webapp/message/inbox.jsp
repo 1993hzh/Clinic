@@ -35,7 +35,7 @@
 					<c:forEach var="rows" items="${data.data}">
 						<tr>
 							<td>
-								<button type="button" class="close" onclick="delete_message('${rows.id}')">
+								<button type="button" class="close" onclick="delete_message('${rows.id}','receive',this)">
 									<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 								</button>
 							</td>

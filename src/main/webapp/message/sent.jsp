@@ -27,7 +27,6 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th><input type="checkbox" class="checkbox"/></th>
 						<th>Receiver</th>
 						<th>Theme</th>
 						<th>Time</th>
@@ -36,7 +35,11 @@
 				<tbody>
 					<c:forEach var="rows" items="${data.data}">
 						<tr>
-							<td class="message_checkbox"><input type="checkbox" class="checkbox"/></td>
+							<td>
+								<button type="button" class="close" onclick="delete_message('${rows.id}','send',this)">
+									<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+								</button>
+							</td>
 							<td class="message_user">${rows.receiverNames}</td>
 							<td class="theme_content">${rows.theme}&nbsp;-&nbsp;${rows.content}</td>
 							<td class="message_sendtime"><fmt:formatDate value="${rows.sendTime}" pattern="yyyy-MM-dd HH:mm" /></td>

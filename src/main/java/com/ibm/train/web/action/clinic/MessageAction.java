@@ -93,7 +93,7 @@ public class MessageAction extends AbstractAction<Message> {
 					receiverNames.append(u.getName()).append("<" + u.getAccount() + ">, ");
 				}
 				message.setReceiverNames(receiverNames.deleteCharAt(receiverNames.lastIndexOf(", ")).toString());
-
+				message.setSendStatus(Message.CONSTANT_NORMAL);
 				message.setReceivers(receiver);
 				message.setSender(getLoginUser());
 				message.setSendTime(new Date());
@@ -147,8 +147,10 @@ public class MessageAction extends AbstractAction<Message> {
 			} else if (lookType.equals(Message.CONSTANT_TYPE_SEND)) {
 				for (String id : ids.split(",")) {
 					message = messageService.findById(id);
-					message.setSendStatus(Message.CONSTANT_DELETE);
-					messageService.update(message);
+					if (message.getSender().getId().equals(getLoginUser().getId())) {
+						message.setSendStatus(Message.CONSTANT_DELETE);
+						messageService.update(message);
+					}
 				}
 			}
 			OutPutStreamUtil.renderText("true");
