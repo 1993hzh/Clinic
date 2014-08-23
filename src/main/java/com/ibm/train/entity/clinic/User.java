@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
@@ -48,10 +47,10 @@ public class User extends AbstractEntity {
 
 	private String role;
 
-	@OneToMany(mappedBy = "sender", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "sender")
 	private List<Message> messageSend;
 
-	@ManyToMany(mappedBy = "receivers", fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy = "receivers")
 	private List<Message> messageReceive;
 
 	public String getName() {

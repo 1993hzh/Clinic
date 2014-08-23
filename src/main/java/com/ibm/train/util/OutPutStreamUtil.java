@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
+import org.codehaus.jackson.map.ObjectMapper;
 
 /**
  * @author HuZhonghua
@@ -15,6 +16,8 @@ import org.apache.struts2.ServletActionContext;
 public class OutPutStreamUtil {
 
 	protected static final String CONSTANT_ENCODING = "utf-8";
+	
+	protected ObjectMapper mapper = new ObjectMapper();
 
 	public static void renderText(String content) {
 		try {

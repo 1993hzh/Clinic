@@ -1,9 +1,12 @@
 package com.ibm.train.web.action;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +32,6 @@ public abstract class AbstractAction<T> implements ModelDriven<T> {
 	protected String query;// query value
 
 	protected PageJsonData data = new PageJsonData();
-	protected ObjectMapper mapper = new ObjectMapper();
 
 	public String execute() {
 		return list();
@@ -100,7 +102,18 @@ public abstract class AbstractAction<T> implements ModelDriven<T> {
 	public User getLoginUser() {
 		Object user = ServletActionContext.getRequest().getSession().getAttribute(User.CONSTANT_LOGIN_USER);
 		return user == null ? null : (User) user;
-
+	}
+	
+	protected HttpSession getSession () {
+		return ServletActionContext.getRequest().getSession();
+	}
+	
+	protected HttpServletRequest getRequest() {
+		return ServletActionContext.getRequest();
 	}
 
+	protected HttpServletResponse getResponse() {
+		return ServletActionContext.getResponse();
+	}
+	
 }
