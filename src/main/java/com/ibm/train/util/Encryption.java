@@ -4,6 +4,10 @@ import java.security.MessageDigest;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 
+/**
+ * @author HuZhonghua
+ *
+ */
 public class Encryption {
 	public static String encoderBySHA1(String str) {
 		if (null == str) {
